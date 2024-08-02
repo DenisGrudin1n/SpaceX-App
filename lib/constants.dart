@@ -8,7 +8,7 @@ class Clrs {
   static const Color cWhite = Color.fromARGB(255, 255, 255, 255);
 }
 
-class Fonts {
+class FontWeights {
   static const FontWeight mediumFW = FontWeight.w500;
   static const FontWeight lightFW = FontWeight.w400;
 }
