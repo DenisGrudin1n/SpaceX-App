@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:spacex_app/constants.dart';
 import 'package:spacex_app/models/rocket_model.dart';
 
 class Mission {
@@ -7,6 +8,7 @@ class Mission {
   final String name;
   final String location;
   final Rocket rocket;
+  final String url;
 
   Mission({
     required this.date,
@@ -14,6 +16,7 @@ class Mission {
     required this.name,
     required this.location,
     required this.rocket,
+    required this.url,
   });
 
   factory Mission.fromJson(Map<String, dynamic> json) {
@@ -29,6 +32,7 @@ class Mission {
       name: json['mission_name'] ?? 'Unknown Mission',
       location: json['launch_site']?['site_name_long'] ?? 'Unknown Location',
       rocket: Rocket.fromJson(json['rocket'] ?? {}),
+      url: json['wikipedia'] ?? '${Urls.wikiBaseUrl}${json['mission_name']}',
     );
   }
 }

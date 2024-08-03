@@ -13,44 +13,18 @@ class FontWeights {
   static const FontWeight lightFW = FontWeight.w400;
 }
 
-class DataLists {
-  final List<String> images = [
-    'assets/images/rocket1.jpg',
-    'assets/images/rocket2.jpg',
-    'assets/images/rocket3.jpg',
-    'assets/images/rocket4.jpg',
-  ];
+class Texts {
+  static const String topLabel = 'SpaceX Launches';
+  static const String bottomLabel = 'Missions';
+  static const String emptyLaunches = "No missions available";
 
-  final List<Map<String, String>> missions = [
-    {
-      'date': '10/06/2023',
-      'time': '06:34 PM',
-      'name': 'Starlink Group 2-10',
-      'location': 'Kwajalein Atoll Omelek Island',
-    },
-    {
-      'date': '11/06/2023',
-      'time': '06:34 PM',
-      'name': 'CRS2 SpX-28 (Dragon)',
-      'location': 'Kwajalein Atoll Omelek Island',
-    },
-    {
-      'date': '12/02/2023',
-      'time': '06:34 PM',
-      'name': 'CRS2 SpX-28 (Dragon)',
-      'location': 'Kwajalein Atoll Omelek Island',
-    },
-    {
-      'date': '15/02/2023',
-      'time': '06:34 PM',
-      'name': 'CRS2 SpX-28 (Dragon)',
-      'location': 'Kwajalein Atoll Omelek Island',
-    },
-    {
-      'date': '13/02/2023',
-      'time': '06:34 PM',
-      'name': 'CRS2 SpX-28 (Dragon)',
-      'location': 'Kwajalein Atoll Omelek Island',
-    },
-  ];
+  static const String rocketsServiceException = 'Failed to load rockets';
+  static const String missionsServiceException = 'Failed to load missions';
+}
+
+class Urls {
+  static const String rocketsUrl = 'https://api.spacexdata.com/v3/rockets';
+  static const String launchesUrl = 'https://api.spacexdata.com/v3/launches';
+  static const String wikiBaseUrl = 'https://en.wikipedia.org/wiki/';
+  static const String placeHolder = 'https://via.placeholder.com/150';
 }

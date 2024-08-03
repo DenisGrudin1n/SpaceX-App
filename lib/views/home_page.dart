@@ -5,6 +5,7 @@ import 'package:spacex_app/constants.dart';
 import 'package:spacex_app/controllers/missions_controller.dart';
 import 'package:spacex_app/controllers/rockets_controller.dart';
 import 'package:spacex_app/controllers/slider_controller.dart';
+import 'package:spacex_app/services/url_launcher_service.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -14,6 +15,9 @@ class HomePage extends StatelessWidget {
     final SliderController sliderController = Get.put(SliderController());
     final RocketsController rocketsController = Get.put(RocketsController());
     final MissionsController missionsController = Get.put(MissionsController());
+
+    final UrlLauncherService urlLauncherService = UrlLauncherService();
+
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -27,7 +31,7 @@ class HomePage extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              "SpaceX Launches",
+              Texts.topLabel,
               style: TextStyle(
                   color: Clrs.cWhite,
                   fontSize: 24,
@@ -74,7 +78,7 @@ class HomePage extends StatelessWidget {
                             child: Image.network(
                               rocket.flickrImages.isNotEmpty
                                   ? rocket.flickrImages[0]
-                                  : 'https://via.placeholder.com/150',
+                                  : Urls.placeHolder,
                               fit: BoxFit.cover,
                               width: screenWidth * 0.78,
                             ),
@@ -129,7 +133,7 @@ class HomePage extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: Text(
-                "Missions",
+                Texts.bottomLabel,
                 style: TextStyle(
                   color: Clrs.cWhite,
                   fontWeight: FontWeights.mediumFW,
@@ -154,7 +158,7 @@ class HomePage extends StatelessWidget {
                     height: screenHeight / 2,
                     child: const Center(
                       child: Text(
-                        "No missions available",
+                        Texts.emptyLaunches,
                         style: TextStyle(color: Clrs.cWhite, fontSize: 18),
                       ),
                     ),
@@ -162,83 +166,87 @@ class HomePage extends StatelessWidget {
                 } else {
                   return Column(
                     children: missionsController.missions.map((mission) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 5),
-                        child: Container(
-                          height: screenHeight * 0.15,
-                          width: screenWidth,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Clrs.cDarkGrey,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(
-                              16,
-                              16,
-                              21,
-                              16,
+                      return GestureDetector(
+                        onTap: () => urlLauncherService.launchURL(mission.url),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 5),
+                          child: Container(
+                            height: screenHeight * 0.15,
+                            width: screenWidth,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Clrs.cDarkGrey,
                             ),
-                            child: Row(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      mission.date,
-                                      style: const TextStyle(
-                                        color: Clrs.cLightGreen,
-                                        fontWeight: FontWeights.mediumFW,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 2,
-                                    ),
-                                    Text(
-                                      mission.time,
-                                      style: const TextStyle(
-                                        color: Clrs.cLightGrey,
-                                        fontWeight: FontWeights.lightFW,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  width: 21,
-                                ),
-                                Expanded(
-                                  child: Column(
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                16,
+                                16,
+                                21,
+                                16,
+                              ),
+                              child: Row(
+                                children: [
+                                  Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        mission.name,
+                                        mission.date,
                                         style: const TextStyle(
-                                          color: Clrs.cWhite,
+                                          color: Clrs.cLightGreen,
                                           fontWeight: FontWeights.mediumFW,
-                                          fontSize: 20,
+                                          fontSize: 16,
                                         ),
                                       ),
                                       const SizedBox(
                                         height: 2,
                                       ),
-                                      Flexible(
-                                        child: Text(
-                                          mission.location,
-                                          style: const TextStyle(
-                                            color: Clrs.cLightGrey,
-                                            fontWeight: FontWeights.lightFW,
-                                            fontSize: 16,
-                                          ),
-                                          softWrap: true,
+                                      Text(
+                                        mission.time,
+                                        style: const TextStyle(
+                                          color: Clrs.cLightGrey,
+                                          fontWeight: FontWeights.lightFW,
+                                          fontSize: 16,
                                         ),
                                       ),
                                     ],
                                   ),
-                                ),
-                              ],
+                                  const SizedBox(
+                                    width: 21,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          mission.name,
+                                          style: const TextStyle(
+                                            color: Clrs.cWhite,
+                                            fontWeight: FontWeights.mediumFW,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 2,
+                                        ),
+                                        Flexible(
+                                          child: Text(
+                                            mission.location,
+                                            style: const TextStyle(
+                                              color: Clrs.cLightGrey,
+                                              fontWeight: FontWeights.lightFW,
+                                              fontSize: 16,
+                                            ),
+                                            softWrap: true,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),

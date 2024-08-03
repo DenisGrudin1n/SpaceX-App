@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
+import 'package:spacex_app/constants.dart';
 import 'package:spacex_app/models/rocket_model.dart';
 
 class RocketsService {
-  static const String rocketsUrl = 'https://api.spacexdata.com/v3/rockets';
+  static const String rocketsUrl = Urls.rocketsUrl;
   final Logger logger = Logger();
 
   Future<List<Rocket>> fetchRockets() async {
@@ -14,7 +15,7 @@ class RocketsService {
       logger.d('Raw data from rockets API: $data');
       return data.map((json) => Rocket.fromJson(json)).toList();
     } else {
-      throw Exception('Failed to load rockets');
+      throw Exception(Texts.rocketsServiceException);
     }
   }
 }

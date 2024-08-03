@@ -7,10 +7,17 @@ import 'package:spacex_app/views/home_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  Get.lazyPut(() => SliderController());
-  Get.lazyPut(() => RocketsController());
-  Get.lazyPut(() => MissionsController());
+  AppBindings().dependencies();
   runApp(const MyApp());
+}
+
+class AppBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut(() => SliderController());
+    Get.lazyPut(() => RocketsController());
+    Get.lazyPut(() => MissionsController());
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -19,7 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'Flutter Demo',
+      title: 'SpaceX Rocket Launches App',
       debugShowCheckedModeBanner: false,
       home: HomePage(),
     );
