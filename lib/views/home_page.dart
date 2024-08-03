@@ -54,35 +54,32 @@ class HomePage extends StatelessWidget {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      CarouselSlider(
+                      CarouselSlider.builder(
+                        itemCount: rocketsController.rockets.length,
                         options: CarouselOptions(
-                          height: screenHeight * 0.26,
+                          height: screenHeight * 0.25,
                           enlargeCenterPage: true,
                           enlargeFactor: 0.17,
                           onPageChanged: (index, reason) {
                             sliderController.onPageChanged(index);
-                            int currentRocketId =
-                                rocketsController.rockets[index].id;
+                            final rocket = rocketsController.rockets[index];
                             missionsController
-                                .fetchMissionsForRocket(currentRocketId);
+                                .fetchMissionsForRocket(rocket.id.toString());
                           },
                         ),
-                        items: rocketsController.rockets.map((rocket) {
-                          return Builder(
-                            builder: (BuildContext context) {
-                              return ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.network(
-                                  rocket.flickrImages.isNotEmpty
-                                      ? rocket.flickrImages[0]
-                                      : 'https://via.placeholder.com/150',
-                                  fit: BoxFit.cover,
-                                  width: screenWidth * 0.78,
-                                ),
-                              );
-                            },
+                        itemBuilder: (context, index, realIndex) {
+                          final rocket = rocketsController.rockets[index];
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              rocket.flickrImages.isNotEmpty
+                                  ? rocket.flickrImages[0]
+                                  : 'https://via.placeholder.com/150',
+                              fit: BoxFit.cover,
+                              width: screenWidth * 0.78,
+                            ),
                           );
-                        }).toList(),
+                        },
                       ),
                       Obx(
                         () {
@@ -92,8 +89,9 @@ class HomePage extends StatelessWidget {
                                 rocketsController.rockets.asMap().entries.map(
                               (entry) {
                                 return GestureDetector(
-                                  onTap: () =>
-                                      sliderController.onPageChanged(entry.key),
+                                  onTap: () {
+                                    sliderController.onPageChanged(entry.key);
+                                  },
                                   child: Container(
                                     width: 10,
                                     height: 10,
@@ -166,9 +164,9 @@ class HomePage extends StatelessWidget {
                     children: missionsController.missions.map((mission) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 8),
+                            horizontal: 16, vertical: 5),
                         child: Container(
-                          height: screenHeight * 0.144,
+                          height: screenHeight * 0.175,
                           width: screenWidth,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),

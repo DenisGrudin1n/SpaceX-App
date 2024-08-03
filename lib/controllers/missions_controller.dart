@@ -8,17 +8,21 @@ class MissionsController extends GetxController {
   var isLoading = false.obs;
   final Logger logger = Logger();
 
-  void fetchMissionsForRocket(int rocketId) async {
+  void fetchMissionsForRocket(String rocketId) async {
     try {
       isLoading.value = true;
       logger.d('Fetching missions...');
       var fetchedMissions = await MissionsService().fetchMissions();
       logger.d('Missions fetched: ${fetchedMissions.length}');
+      for (var mission in fetchedMissions) {
+        logger.d('Mission rocketId: ${mission.rocketId}, Rocket id: $rocketId');
+      }
       var filteredMissions = fetchedMissions
           .where((mission) => mission.rocketId == rocketId)
           .toList();
+      update();
       logger.d('Filtered missions: ${filteredMissions.length}');
-      missions.assignAll(filteredMissions);
+      missions.assignAll(fetchedMissions);
     } catch (e, stacktrace) {
       logger.e('Error fetching missions', error: e, stackTrace: stacktrace);
     } finally {
