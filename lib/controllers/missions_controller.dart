@@ -15,14 +15,14 @@ class MissionsController extends GetxController {
       var fetchedMissions = await MissionsService().fetchMissions();
       logger.d('Missions fetched: ${fetchedMissions.length}');
       for (var mission in fetchedMissions) {
-        logger.d('Mission rocketId: ${mission.rocketId}, Rocket id: $rocketId');
+        logger.d(
+            'Mission rocketId: ${mission.rocket.rocketId}, Selected rocketId: $rocketId');
       }
       var filteredMissions = fetchedMissions
-          .where((mission) => mission.rocketId == rocketId)
+          .where((mission) => mission.rocket.rocketId == rocketId)
           .toList();
-      update();
       logger.d('Filtered missions: ${filteredMissions.length}');
-      missions.assignAll(fetchedMissions);
+      missions.assignAll(filteredMissions);
     } catch (e, stacktrace) {
       logger.e('Error fetching missions', error: e, stackTrace: stacktrace);
     } finally {

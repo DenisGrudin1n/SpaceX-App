@@ -1,18 +1,19 @@
 import 'package:intl/intl.dart';
+import 'package:spacex_app/models/rocket_model.dart';
 
 class Mission {
   final String date;
   final String time;
   final String name;
   final String location;
-  final String rocketId;
+  final Rocket rocket;
 
   Mission({
     required this.date,
     required this.time,
     required this.name,
     required this.location,
-    required this.rocketId,
+    required this.rocket,
   });
 
   factory Mission.fromJson(Map<String, dynamic> json) {
@@ -22,14 +23,12 @@ class Mission {
     final formattedDate = DateFormat('MM/dd/yyyy').format(launchDateTime);
     final formattedTime = DateFormat('hh:mm a').format(launchDateTime);
 
-    final rocketId = json['rocket']?['rocket_id']?.toString() ?? '';
-
     return Mission(
       date: formattedDate,
       time: formattedTime,
       name: json['mission_name'] ?? 'Unknown Mission',
       location: json['launch_site']?['site_name_long'] ?? 'Unknown Location',
-      rocketId: rocketId,
+      rocket: Rocket.fromJson(json['rocket'] ?? {}),
     );
   }
 }

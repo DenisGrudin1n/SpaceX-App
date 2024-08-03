@@ -63,8 +63,8 @@ class HomePage extends StatelessWidget {
                           onPageChanged: (index, reason) {
                             sliderController.onPageChanged(index);
                             final rocket = rocketsController.rockets[index];
-                            missionsController
-                                .fetchMissionsForRocket(rocket.id.toString());
+                            missionsController.fetchMissionsForRocket(
+                                rocket.rocketId.toString());
                           },
                         ),
                         itemBuilder: (context, index, realIndex) {
@@ -166,7 +166,7 @@ class HomePage extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 16, vertical: 5),
                         child: Container(
-                          height: screenHeight * 0.175,
+                          height: screenHeight * 0.15,
                           width: screenWidth,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
@@ -224,14 +224,16 @@ class HomePage extends StatelessWidget {
                                       const SizedBox(
                                         height: 2,
                                       ),
-                                      Text(
-                                        mission.location,
-                                        style: const TextStyle(
-                                          color: Clrs.cLightGrey,
-                                          fontWeight: FontWeights.lightFW,
-                                          fontSize: 16,
+                                      Flexible(
+                                        child: Text(
+                                          mission.location,
+                                          style: const TextStyle(
+                                            color: Clrs.cLightGrey,
+                                            fontWeight: FontWeights.lightFW,
+                                            fontSize: 16,
+                                          ),
+                                          softWrap: true,
                                         ),
-                                        softWrap: true,
                                       ),
                                     ],
                                   ),
